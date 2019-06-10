@@ -1,0 +1,3 @@
+"""
+Gera dados prontos mocados
+"""

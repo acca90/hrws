@@ -1,2 +1,2 @@
 # hrws
-Hear Rate Web Service
+Heart Rate Web Service

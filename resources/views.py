@@ -1,20 +1,14 @@
 from flask_restful import Resource
-from resources.models import Patient, Monitoring
+from resources.models import Patient, Monitoring, Indicator
 
 
 class MonitoringView(Resource):
 
     def get(self):
+        query = Monitoring.select().where(
+            Monitoring.begin.between('2019-01-17 00:00:00', '2019-01-17 11:58:00')
+        )
+        return [monitoring.serialize for monitoring in query]
 
-        monitorings = Monitoring.select()
-        monitorings_array = []
-
-        for monitoring in monitorings:
-            monitorings_array.append({
-                'patient': str(monitoring.patient.uid),
-                'begin': str(monitoring.begin),
-                'end': str(monitoring.end)
-            })
-
-        return monitorings_array
+ 
     

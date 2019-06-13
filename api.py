@@ -7,7 +7,7 @@ app = Flask(__name__)
 api = Api(app, catch_all_404s=True)
 
 
-api.add_resource(MonitoringView, api_version + 'sync')
+api.add_resource(MonitoringView, api_version + 'monitoring')
 
 
 if __name__ == '__main__':

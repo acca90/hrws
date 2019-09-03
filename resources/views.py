@@ -1,14 +1,25 @@
 from flask_restful import Resource
 from resources.models import Patient, Monitoring, Indicator
+from flask import request
 
 
 class MonitoringView(Resource):
+    """
+    Class defined for monitoring operations
+    """
 
-    def get(self):
+    def post(self):
         query = Monitoring.select().where(
-            Monitoring.begin.between('2019-01-17 00:00:00', '2019-01-17 11:58:00')
+            Monitoring.begin.between(request.form['begin'], request.form['end'])
         )
-        return [monitoring.serialize for monitoring in query]
+        return [monitoring.serialize(True) for monitoring in query]
 
- 
-    
+
+class PatientView(Resource):
+    """
+    Class defined for patient operations
+    """
+
+    def post(self):
+        print(request.get_json())
+        return []

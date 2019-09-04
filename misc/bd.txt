@@ -68,3 +68,16 @@ values
 select * from monitoring;
 
 update monitoring set patient = id
+
+
+drop table if exists Patient;
+CREATE TABLE Patient
+(
+  id serial,
+  uuid uuid NOT NULL,
+  first_name character varying(255) NOT NULL,
+  last_name character varying(255) NOT NULL,
+  birth_date date NOT NULL,
+  gender integer NOT NULL,
+  CONSTRAINT "Patient_pkey" PRIMARY KEY (id)
+)

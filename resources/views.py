@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from resources.models import Patient, Monitoring, Indicator
+from resources.models import Patient, Monitoring
 from flask import request
 
 
@@ -21,5 +21,9 @@ class PatientView(Resource):
     """
 
     def post(self):
-        print(request.get_json())
-        return []
+        patient = request.get_json()
+        records = Patient.select().where(Patient.uuid == patient['uuid']).count()
+        if records == 0:
+            Patient.insert(patient).execute()
+
+        return {"success": "Patient correctly recorded"}

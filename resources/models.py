@@ -28,6 +28,7 @@ class Monitoring(Model):
     """
     Model that represents the monitoring period 
     """
+    uuid = UUIDField(column_name='uuid')
     patient = ForeignKeyField(Patient, column_name='patient')
     begin = DateTimeField(column_name='monitoring_begin', default=datetime.datetime.now)
     end = DateTimeField(column_name='monitoring_end', default=datetime.datetime.now)
@@ -37,7 +38,8 @@ class Monitoring(Model):
 
     def __repr__(self):
         return "{},{},{},{}".format(
-            str(self.patient.uid),
+            str(self.patient.uuid),
+            str(self.uuid),
             str(self.begin),
             str(self.end),
             str(self.indicators)
@@ -45,7 +47,8 @@ class Monitoring(Model):
 
     def serialize(self, eager=False):
         return {
-            'patient': str(self.patient.uid),
+            'uuid': str(self.uuid),
+            'patient': str(self.patient.uuid),
             'begin': str(self.begin),
             'end': str(self.end),
             'indicators': self.indicators() if eager else []

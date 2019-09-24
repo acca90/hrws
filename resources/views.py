@@ -7,10 +7,10 @@ class MonitoringView(Resource):
     """
     Class defined for monitoring operations
     """
-
     def post(self):
+        json_request = request.get_json()
         query = Monitoring.select().where(
-            Monitoring.begin.between(request.form['begin'], request.form['end'])
+            Monitoring.begin.between(json_request['begin'], json_request['end'])
         )
         return [monitoring.serialize(True) for monitoring in query]
 
@@ -21,9 +21,9 @@ class PatientView(Resource):
     """
 
     def post(self):
-        patient = request.get_json()
-        records = Patient.select().where(Patient.uuid == patient['uuid']).count()
+        json_patient = request.get_json()
+        records = Patient.select().where(Patient.uuid == json_patient['uuid']).count()
         if records == 0:
-            Patient.insert(patient).execute()
+            Patient.insert(json_patient).execute()
 
         return {"success": "Patient correctly recorded"}

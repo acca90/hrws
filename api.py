@@ -7,6 +7,11 @@ app = Flask(__name__)
 api = Api(app, catch_all_404s=True)
 
 
+@app.route('/')
+def main():
+    return "It's working!"
+
+
 api.add_resource(MonitoringView, api_version + 'monitoring')
 api.add_resource(PatientView, api_version + 'patient')
 

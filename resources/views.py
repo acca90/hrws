@@ -8,7 +8,24 @@ class MonitoringView(Resource):
     Class defined for monitoring operations
     """
     def post(self):
-        json_request = request.get_json()
+        """
+        Handle's post request for monitorings
+        """
+        if 'patients' in request.get_json():
+            return self.fetch_by_patients(request.get_json())
+        else:
+            return self.fetch_all(request.get_json())
+
+    def fetch_by_patients(self, json_request):
+        """
+        Fetch monitoring results filtering by patients
+        """
+        return None
+
+    def fetch_all(self, json_request):
+        """
+        Fetch all monitoring results
+        """
         query = Monitoring.select().where(
             Monitoring.begin.between(json_request['begin'], json_request['end'])
         )

@@ -23,6 +23,13 @@ class Patient(Model):
     class Meta:
         database = pg_db
 
+    def serialize_reference(self):
+        return {
+            'uuid': str(self.uuid),
+            'name': str(self.first_name) + " " + str(self.last_name),
+            'origin': "localhost:5000" # TODO MELHORAR
+        }
+
 
 class Monitoring(Model):
     """
@@ -37,7 +44,7 @@ class Monitoring(Model):
         database = pg_db
 
     def __repr__(self):
-        return "{},{},{},{}".format(
+        return "{},{},{},{},{}".format(
             str(self.patient.uuid),
             str(self.uuid),
             str(self.begin),
@@ -48,7 +55,7 @@ class Monitoring(Model):
     def serialize(self, eager=False):
         return {
             'uuid': str(self.uuid),
-            'patient': str(self.patient.uuid),
+            'reference': str(self.patient.uuid),
             'begin': str(self.begin),
             'end': str(self.end),
             'indicators': self.indicators() if eager else []
